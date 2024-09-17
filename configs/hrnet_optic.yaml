@@ -1,0 +1,39 @@
+# 数据集配置
+DATASET:
+    DATA_DIR: "./dataset/phone/"
+    NUM_CLASSES: 2
+    TEST_FILE_LIST: "dataset/phone/test.txt"
+    TRAIN_FILE_LIST: "dataset/phone/train.txt"
+    VAL_FILE_LIST: "dataset/phone/val.txt"
+
+# 预训练模型配置
+MODEL:
+    MODEL_NAME: "hrnet"
+    DEFAULT_NORM_TYPE: "bn"
+    HRNET:
+        STAGE2:
+            NUM_CHANNELS: [18, 36]
+        STAGE3:
+            NUM_CHANNELS: [18, 36, 72]
+        STAGE4:
+            NUM_CHANNELS: [18, 36, 72, 144]
+
+# 其他配置
+TRAIN_CROP_SIZE: (1024, 512)
+EVAL_CROP_SIZE: (1024, 512)
+AUG:
+    AUG_METHOD: "unpadding"
+    FIX_RESIZE_SIZE: (1024, 512)
+BATCH_SIZE: 16
+TRAIN:
+    PRETRAINED_MODEL_DIR: "./pretrained_model/hrnet_w18_bn_cityscapes/"
+    MODEL_SAVE_DIR: "./saved_model/hrnet_optic/"
+    SNAPSHOT_EPOCH: 10
+TEST:
+    TEST_MODEL: "./saved_model/hrnet_optic/best_model"
+SOLVER:
+    LOSS: ['dice_loss','bce_loss']
+    NUM_EPOCHS: 400
+    LR: 0.001
+    LR_POLICY: "poly"
+    OPTIMIZER: "adam"
